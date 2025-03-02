@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Interactive Recipes: Tikka Masala, Quesabirria, Chicken Al Pastor & Chili</title>
+  <title>Interactive Recipes: Tikka Masala, Birria, Al Pastor & Chili</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -76,9 +76,9 @@
   <h1>Interactive Recipes</h1>
   <div class="tab-buttons">
     <button id="btnChicken" class="active" onclick="showTab('chickenTab')">Chicken Tikka Masala & Raita</button>
-    <button id="btnBeef" onclick="showTab('beefTab')">Instant Pot Quesabirria</button>
-    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Instant Pot Chicken Al Pastor</button>
-    <button id="btnChili" onclick="showTab('chiliTab')">Instant Pot Chili</button>
+    <button id="btnBeef" onclick="showTab('beefTab')">Quesabirria</button>
+    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Chicken Al Pastor</button>
+    <button id="btnChili" onclick="showTab('chiliTab')">Chili</button>
   </div>
 
   <!-- Chicken Tikka Masala & Raita Tab -->
@@ -103,7 +103,7 @@
     <div id="chickenShoppingList" class="section"></div>
   </div>
 
-  <!-- Quesabirria Tab -->
+  <!-- Beef Birria Tacos Tab -->
   <div id="beefTab" class="tab-content" style="display:none;">
     <h2>Instant Pot Quesabirria</h2>
     <div class="section">
@@ -178,7 +178,7 @@
         if (!isNaN(parseFloat(item.altValue))) {
           let altNumber = item.altValue * scaleFactor;
           // For discrete units, round up.
-          if (["tsp", "tbsp", "cloves", "oz", "chiles", "chile"].includes(item.altUnit)) {
+          if (["tsp", "tbsp", "cloves", "oz"].includes(item.altUnit)) {
             altNumber = Math.ceil(altNumber);
           } else if (item.altUnit === "cup") {
             altNumber = Math.ceil(altNumber * 10) / 10;
@@ -248,9 +248,9 @@
     const baseBeefLbs = 3;
     const beefIngredients = [
       { key: "beef", ingredient: "Beef Chuck Roast", baseAmount: 1360, unit: "g", altValue: null, altUnit: "" },
-      { key: "guajillo", ingredient: "Dried Guajillo Chiles", baseAmount: 25, unit: "g", altValue: 3, altUnit: "chiles" },
-      { key: "ancho", ingredient: "Dried Ancho Chiles", baseAmount: 20, unit: "g", altValue: 2, altUnit: "chiles" },
-      { key: "chipotle", ingredient: "Dried Chipotle Chile (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "chile" },
+      { key: "guajillo", ingredient: "Dried Guajillo Chiles", baseAmount: 8, unit: "g", altValue: 2, altUnit: "chiles" },
+      { key: "ancho", ingredient: "Dried Ancho Chiles", baseAmount: 12, unit: "g", altValue: 2, altUnit: "chiles" },
+      { key: "chipotle", ingredient: "Dried Chipotle Chile (optional)", baseAmount: 3, unit: "g", altValue: 1, altUnit: "chile" },
       { key: "onion", ingredient: "Large Onion (quartered)", baseAmount: 150, unit: "g", altValue: 1, altUnit: "large onion" },
       { key: "garlic", ingredient: "Minced Garlic", baseAmount: 12, unit: "g", altValue: 12, altUnit: "g" },
       { key: "tomato", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: 14, altUnit: "oz" },
@@ -381,7 +381,8 @@
       });
       
       let beefHtml = "<ol>";
-      beefHtml += "<li><strong>Prep the Chiles:</strong> Remove stems and seeds from the guajillo, ancho, and chipotle chiles. Toast them lightly (≈1 minute per side) and soak in hot water for 20 minutes. Drain (reserve 15–30 g of soaking water).</li>";
+      // Updated step: include scaled chile amounts in the instructions.
+      beefHtml += "<li><strong>Prep the Chiles:</strong> Remove stems and seeds from the guajillo chiles (" + scaledBeef.guajillo.alt + " / " + scaledBeef.guajillo.weight + "), ancho chiles (" + scaledBeef.ancho.alt + " / " + scaledBeef.ancho.weight + "), and chipotle chile (" + scaledBeef.chipotle.alt + " / " + scaledBeef.chipotle.weight + ") (optional). Toast them lightly (≈1 minute per side) and soak in hot water for 20 minutes. Drain (reserve 15–30 g of soaking water).</li>";
       beefHtml += "<li><strong>Blend the Sauce:</strong> In a blender, combine the soaked chiles, " +
                   scaledBeef.onion.alt + " (" + scaledBeef.onion.weight + ") quartered onion, " +
                   scaledBeef.garlic.alt + " (" + scaledBeef.garlic.weight + ") minced garlic, " +
@@ -472,97 +473,3 @@
       let selectedType = document.getElementById("chiliType").value; // "ground" or "chuck"
       
       let scaledChili = {};
-      chiliIngredients.forEach(item => {
-        if (item.key === "chiliBeef") {
-          const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
-          const altLbs = (scaledWeight / 453.6).toFixed(1);
-          scaledChili[item.key] = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
-        } else {
-          scaledChili[item.key] = getScaledAmount(item, scaleFactor);
-        }
-      });
-      
-      let chiliHtml = "<ol>";
-      chiliHtml += "<li><strong>Sauté the Beef:</strong> Set the Instant Pot to Sauté. Brown the " + scaledChili.chiliBeef.alt + " (" + scaledChili.chiliBeef.weight + ") " + (selectedType === "ground" ? "ground beef" : "chuck roast, cut into chunks") + " until well browned.</li>";
-      chiliHtml += "<li><strong>Add Spices &amp; Tomatoes:</strong> Stir in " +
-                   scaledChili.chiliPowder.alt + " (" + scaledChili.chiliPowder.weight + ") chili powder, " +
-                   scaledChili.crushedTomatoes.alt + " (" + scaledChili.crushedTomatoes.weight + ") crushed tomatoes, " +
-                   scaledChili.greenChilis.alt + " (" + scaledChili.greenChilis.weight + ") green chilis, and " +
-                   scaledChili.cayenne.alt + " (" + scaledChili.cayenne.weight + ") cayenne pepper.</li>";
-      if(selectedType === "ground") {
-        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 10 minutes. Then quick-release the pressure.</li>";
-      } else {
-        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 20 minutes. Allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
-      }
-      chiliHtml += "<li><strong>Simmer:</strong> Switch to Sauté mode and let the chili simmer for 5–10 minutes, stirring occasionally, to blend the flavors.</li>";
-      chiliHtml += "</ol>";
-      
-      document.getElementById("chiliRecipe").innerHTML = chiliHtml;
-      
-      let shoppingHtml = "<ul>";
-      chiliIngredients.forEach(item => {
-        let scaledItem = (item.key === "chiliBeef") ? 
-          { weight: Math.ceil(item.baseAmount * scaleFactor) + " " + item.unit, alt: ((Math.ceil(item.baseAmount * scaleFactor))/453.6).toFixed(1) + " lbs" } :
-          getScaledAmount(item, scaleFactor);
-        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
-      });
-      shoppingHtml += "</ul>";
-      
-      document.getElementById("chiliShoppingList").innerHTML = shoppingHtml;
-    }
-    
-    // ----- Tab Navigation -----
-    function showTab(tabId) {
-      document.getElementById("chickenTab").style.display = "none";
-      document.getElementById("beefTab").style.display = "none";
-      document.getElementById("alPastorTab").style.display = "none";
-      document.getElementById("chiliTab").style.display = "none";
-      document.getElementById("btnChicken").classList.remove("active");
-      document.getElementById("btnBeef").classList.remove("active");
-      document.getElementById("btnAlPastor").classList.remove("active");
-      document.getElementById("btnChili").classList.remove("active");
-      
-      document.getElementById(tabId).style.display = "block";
-      if(tabId === "chickenTab") {
-        document.getElementById("btnChicken").classList.add("active");
-      } else if(tabId === "beefTab") {
-        document.getElementById("btnBeef").classList.add("active");
-      } else if(tabId === "alPastorTab") {
-        document.getElementById("btnAlPastor").classList.add("active");
-      } else if(tabId === "chiliTab") {
-        document.getElementById("btnChili").classList.add("active");
-      }
-    }
-    
-    // ----- Event Listeners & Initialization -----
-    document.getElementById("chickenInput").addEventListener("input", updateChickenRecipe);
-    document.getElementById("beefInput")?.addEventListener("input", updateBeefRecipe);
-    document.getElementById("alPastorInput").addEventListener("input", updateAlPastorRecipe);
-    document.getElementById("chiliInput").addEventListener("input", updateChiliRecipe);
-    document.getElementById("chiliType").addEventListener("change", updateChiliRecipe);
-    
-    window.onload = function() {
-      updateChickenRecipe();
-      if(document.getElementById("beefInput")) { updateBeefRecipe(); }
-      updateAlPastorRecipe();
-      updateChiliRecipe();
-    }
-  </script>
-  
-  <!-- Hidden inputs for Beef, Al Pastor, and Chili -->
-  <div style="display:none;">
-    <input type="number" id="beefInput" value="3" step="0.001" min="0">
-    <span class="scale-display">Scale Factor: <span id="beefScaleFactor">1.00</span></span>
-    <input type="number" id="alPastorInput" value="2" step="0.001" min="0">
-    <span class="scale-display">Scale Factor: <span id="alPastorScaleFactor">1.00</span></span>
-    <input type="number" id="chiliInput" value="1" step="0.001" min="0">
-    <span class="scale-display">Scale Factor: <span id="chiliScaleFactor">1.00</span></span>
-  </div>
-  
-  <!-- Hidden container for chili shopping list -->
-  <div id="chiliShoppingList" class="section" style="display:none;"></div>
-  
-  <!-- Hidden dropdown for chili type is already visible in the Chili tab -->
-  
-</body>
-</html>
