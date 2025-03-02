@@ -381,7 +381,6 @@
       });
       
       let beefHtml = "<ol>";
-      // Updated step: include scaled chile amounts in the instructions.
       beefHtml += "<li><strong>Prep the Chiles:</strong> Remove stems and seeds from the guajillo chiles (" + scaledBeef.guajillo.alt + " / " + scaledBeef.guajillo.weight + "), ancho chiles (" + scaledBeef.ancho.alt + " / " + scaledBeef.ancho.weight + "), and chipotle chile (" + scaledBeef.chipotle.alt + " / " + scaledBeef.chipotle.weight + ") (optional). Toast them lightly (≈1 minute per side) and soak in hot water for 20 minutes. Drain (reserve 15–30 g of soaking water).</li>";
       beefHtml += "<li><strong>Blend the Sauce:</strong> In a blender, combine the soaked chiles, " +
                   scaledBeef.onion.alt + " (" + scaledBeef.onion.weight + ") quartered onion, " +
@@ -389,9 +388,9 @@
                   scaledBeef.tomato.alt + " (" + scaledBeef.tomato.weight + ") crushed tomatoes, " +
                   scaledBeef.vinegar.alt + " (" + scaledBeef.vinegar.weight + ") vinegar, " +
                   scaledBeef.broth.alt + " (" + scaledBeef.broth.weight + ") beef broth, " +
-                  scaledBeef.cumin.alt + " (" + scaledBeef.cumin.weight + "), " +
-                  scaledBeef.oregano.alt + " (" + scaledBeef.oregano.weight + "), and " +
-                  scaledBeef.cinnamon.alt + " (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed.</li>";
+                  scaledBeef.cumin.alt + " ground cumin (" + scaledBeef.cumin.weight + "), " +
+                  scaledBeef.oregano.alt + " dried oregano (" + scaledBeef.oregano.weight + "), and " +
+                  scaledBeef.cinnamon.alt + " ground cinnamon (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed.</li>";
       beefHtml += "<li><strong>Sear the Beef:</strong> Season " + scaledBeef.beef.weight + " of beef with salt and pepper. Sauté in the Instant Pot with about 15 g oil until well browned in batches.</li>";
       beefHtml += "<li><strong>Pressure Cook:</strong> Return the beef to the pot, add the blended sauce and " + scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for 45 minutes; allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
       beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Discard bay leaves, shred the beef, and warm the tortillas (≈" + scaledBeef.tortilla.alt + "). Dip them briefly in the broth, then fill with beef and top with " +
