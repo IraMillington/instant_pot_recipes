@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Interactive Recipes: Tikka Masala, Birria, Al Pastor & Chili</title>
+  <title>Interactive Recipes: Tikka Masala, Quesabirria, Chicken Al Pastor & Chili</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -76,9 +76,9 @@
   <h1>Interactive Recipes</h1>
   <div class="tab-buttons">
     <button id="btnChicken" class="active" onclick="showTab('chickenTab')">Chicken Tikka Masala & Raita</button>
-    <button id="btnBeef" onclick="showTab('beefTab')">Quesabirria</button>
-    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Chicken Al Pastor</button>
-    <button id="btnChili" onclick="showTab('chiliTab')">Chili</button>
+    <button id="btnBeef" onclick="showTab('beefTab')">Instant Pot Quesabirria</button>
+    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Instant Pot Chicken Al Pastor</button>
+    <button id="btnChili" onclick="showTab('chiliTab')">Instant Pot Chili</button>
   </div>
 
   <!-- Chicken Tikka Masala & Raita Tab -->
@@ -103,7 +103,7 @@
     <div id="chickenShoppingList" class="section"></div>
   </div>
 
-  <!-- Beef Birria Tacos Tab -->
+  <!-- Quesabirria Tab -->
   <div id="beefTab" class="tab-content" style="display:none;">
     <h2>Instant Pot Quesabirria</h2>
     <div class="section">
@@ -178,7 +178,7 @@
         if (!isNaN(parseFloat(item.altValue))) {
           let altNumber = item.altValue * scaleFactor;
           // For discrete units, round up.
-          if (["tsp", "tbsp", "cloves", "oz"].includes(item.altUnit)) {
+          if (["tsp", "tbsp", "cloves", "oz", "chiles", "chile"].includes(item.altUnit)) {
             altNumber = Math.ceil(altNumber);
           } else if (item.altUnit === "cup") {
             altNumber = Math.ceil(altNumber * 10) / 10;
@@ -242,6 +242,58 @@
       { key: "roastedCumin", ingredient: "Roasted Cumin Powder", baseAmount: 1, unit: "g", altValue: "a pinch", altUnit: "" },
       { key: "raitaSalt", ingredient: "Salt", baseAmount: 0.5, unit: "g", altValue: "a pinch", altUnit: "" },
       { key: "mint", ingredient: "Chopped Fresh Mint", baseAmount: 10, unit: "g", altValue: "a handful of", altUnit: "mint" }
+    ];
+    
+    // ----- Quesabirria -----
+    const baseBeefLbs = 3;
+    const beefIngredients = [
+      { key: "beef", ingredient: "Beef Chuck Roast", baseAmount: 1360, unit: "g", altValue: null, altUnit: "" },
+      { key: "guajillo", ingredient: "Dried Guajillo Chiles", baseAmount: 25, unit: "g", altValue: 3, altUnit: "chiles" },
+      { key: "ancho", ingredient: "Dried Ancho Chiles", baseAmount: 20, unit: "g", altValue: 2, altUnit: "chiles" },
+      { key: "chipotle", ingredient: "Dried Chipotle Chile (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "chile" },
+      { key: "onion", ingredient: "Large Onion (quartered)", baseAmount: 150, unit: "g", altValue: 1, altUnit: "large onion" },
+      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 12, unit: "g", altValue: 12, altUnit: "g" },
+      { key: "tomato", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: 14, altUnit: "oz" },
+      { key: "broth", ingredient: "Beef Broth", baseAmount: 120, unit: "g", altValue: 0.5, altUnit: "cup" },
+      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 60, unit: "g", altValue: 0.25, altUnit: "cup" },
+      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2.5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "cinnamon", ingredient: "Ground Cinnamon", baseAmount: 1.25, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "bay", ingredient: "Bay Leaves", baseAmount: 2, unit: "", altValue: "2", altUnit: "bay leaves" },
+      { key: "water", ingredient: "Water (for blending)", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "tortilla", ingredient: "Corn Tortillas", baseAmount: 30, unit: "g", altValue: 1, altUnit: "tortilla" },
+      { key: "tacoOnion", ingredient: "Chopped White Onion (topping)", baseAmount: 50, unit: "g", altValue: 0.25, altUnit: "cup" },
+      { key: "cilantro", ingredient: "Chopped Fresh Cilantro (topping)", baseAmount: 10, unit: "g", altValue: 1, altUnit: "small bunch" },
+      { key: "lime", ingredient: "Lime Wedge", baseAmount: 70, unit: "g", altValue: 1, altUnit: "lime" }
+    ];
+    
+    // ----- Chicken Al Pastor -----
+    const baseAlPastorLbs = 2;
+    const alPastorIngredients = [
+      { key: "alPastorChicken", ingredient: "Chicken (boneless, skinless)", baseAmount: 900, unit: "g", altValue: null, altUnit: "" },
+      { key: "pineappleJuice", ingredient: "Pineapple Juice", baseAmount: 80, unit: "mL", altValue: 0.33, altUnit: "cup" },
+      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 20, unit: "mL", altValue: 1, altUnit: "tbsp" },
+      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 10, unit: "g", altValue: 3, altUnit: "cloves" },
+      { key: "ginger", ingredient: "Grated Ginger", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 4, unit: "g", altValue: 1.5, altUnit: "tsp" },
+      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "salt", ingredient: "Salt", baseAmount: 3, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "pepper", ingredient: "Black Pepper", baseAmount: 1, unit: "g", altValue: 0.25, altUnit: "tsp" },
+      { key: "achiote", ingredient: "Achiote Paste", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "chipotle", ingredient: "Chipotle in Adobo (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "alPastorOnion", ingredient: "Sliced Onion", baseAmount: 100, unit: "g", altValue: 0.5, altUnit: "large onion" },
+      { key: "pineappleChunks", ingredient: "Pineapple Chunks", baseAmount: 150, unit: "g", altValue: 0.75, altUnit: "cup" }
+    ];
+    
+    // ----- Chili -----
+    const baseChiliLbs = 1; // Base: 1 lb (454 g) of beef
+    const chiliIngredients = [
+      { key: "chiliBeef", ingredient: "Beef", baseAmount: 454, unit: "g", altValue: null, altUnit: "" },
+      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 20, unit: "g", altValue: 2, altUnit: "tbsp" },
+      { key: "crushedTomatoes", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: "1", altUnit: "can" },
+      { key: "greenChilis", ingredient: "Green Chilis", baseAmount: 227, unit: "g", altValue: "1", altUnit: "can" },
+      { key: "cayenne", ingredient: "Cayenne Pepper", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" }
     ];
     
     function updateChickenRecipe() {
@@ -310,29 +362,6 @@
       document.getElementById("chickenShoppingList").innerHTML = shoppingHtml;
     }
     
-    // ----- Beef Birria Tacos -----
-    const baseBeefLbs = 3;
-    const beefIngredients = [
-      { key: "beef", ingredient: "Beef Chuck Roast", baseAmount: 1360, unit: "g", altValue: null, altUnit: "" },
-      { key: "guajillo", ingredient: "Dried Guajillo Chiles", baseAmount: 8, unit: "g", altValue: 2, altUnit: "chiles" },
-      { key: "ancho", ingredient: "Dried Ancho Chiles", baseAmount: 12, unit: "g", altValue: 2, altUnit: "chiles" },
-      { key: "chipotle", ingredient: "Dried Chipotle Chile (optional)", baseAmount: 3, unit: "g", altValue: 1, altUnit: "chile" },
-      { key: "onion", ingredient: "Large Onion (quartered)", baseAmount: 150, unit: "g", altValue: 1, altUnit: "large onion" },
-      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 12, unit: "g", altValue: 12, altUnit: "g" },
-      { key: "tomato", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: 14, altUnit: "oz" },
-      { key: "broth", ingredient: "Beef Broth", baseAmount: 120, unit: "g", altValue: 0.5, altUnit: "cup" },
-      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 60, unit: "g", altValue: 0.25, altUnit: "cup" },
-      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2.5, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "cinnamon", ingredient: "Ground Cinnamon", baseAmount: 1.25, unit: "g", altValue: 0.5, altUnit: "tsp" },
-      { key: "bay", ingredient: "Bay Leaves", baseAmount: 2, unit: "", altValue: "2", altUnit: "bay leaves" },
-      { key: "water", ingredient: "Water (for blending)", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
-      { key: "tortilla", ingredient: "Corn Tortillas", baseAmount: 30, unit: "g", altValue: 1, altUnit: "tortilla" },
-      { key: "tacoOnion", ingredient: "Chopped White Onion (topping)", baseAmount: 50, unit: "g", altValue: 0.25, altUnit: "cup" },
-      { key: "cilantro", ingredient: "Chopped Fresh Cilantro (topping)", baseAmount: 10, unit: "g", altValue: 1, altUnit: "small bunch" },
-      { key: "lime", ingredient: "Lime Wedge", baseAmount: 70, unit: "g", altValue: 1, altUnit: "lime" }
-    ];
-    
     function updateBeefRecipe() {
       const beefInput = document.getElementById("beefInput");
       let beefWeight = parseFloat(beefInput.value);
@@ -390,25 +419,6 @@
       document.getElementById("beefShoppingList").innerHTML = shoppingHtml;
     }
     
-    // ----- Chicken Al Pastor -----
-    const baseAlPastorLbs = 2;
-    const alPastorIngredients = [
-      { key: "alPastorChicken", ingredient: "Chicken (boneless, skinless)", baseAmount: 900, unit: "g", altValue: null, altUnit: "" },
-      { key: "pineappleJuice", ingredient: "Pineapple Juice", baseAmount: 80, unit: "mL", altValue: 0.33, altUnit: "cup" },
-      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 20, unit: "mL", altValue: 1, altUnit: "tbsp" },
-      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 10, unit: "g", altValue: 3, altUnit: "cloves" },
-      { key: "ginger", ingredient: "Grated Ginger", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 4, unit: "g", altValue: 1.5, altUnit: "tsp" },
-      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "salt", ingredient: "Salt", baseAmount: 3, unit: "g", altValue: 0.5, altUnit: "tsp" },
-      { key: "pepper", ingredient: "Black Pepper", baseAmount: 1, unit: "g", altValue: 0.25, altUnit: "tsp" },
-      { key: "achiote", ingredient: "Achiote Paste", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
-      { key: "chipotle", ingredient: "Chipotle in Adobo (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "alPastorOnion", ingredient: "Sliced Onion", baseAmount: 100, unit: "g", altValue: 0.5, altUnit: "large onion" },
-      { key: "pineappleChunks", ingredient: "Pineapple Chunks", baseAmount: 150, unit: "g", altValue: 0.75, altUnit: "cup" }
-    ];
-    
     function updateAlPastorRecipe() {
       const alPastorInput = document.getElementById("alPastorInput");
       let alPastorWeight = parseFloat(alPastorInput.value);
@@ -452,16 +462,6 @@
       document.getElementById("alPastorShoppingList").innerHTML = shoppingHtml;
     }
     
-    // ----- Chili -----
-    const baseChiliLbs = 1; // Base: 1 lb (454 g) of beef
-    const chiliIngredients = [
-      { key: "chiliBeef", ingredient: "Beef", baseAmount: 454, unit: "g", altValue: null, altUnit: "" },
-      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 20, unit: "g", altValue: 2, altUnit: "tbsp" },
-      { key: "crushedTomatoes", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: "1", altUnit: "can" },
-      { key: "greenChilis", ingredient: "Green Chilis", baseAmount: 227, unit: "g", altValue: "1", altUnit: "can" },
-      { key: "cayenne", ingredient: "Cayenne Pepper", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" }
-    ];
-    
     function updateChiliRecipe() {
       const chiliInput = document.getElementById("chiliInput");
       let chiliWeight = parseFloat(chiliInput.value);
@@ -475,7 +475,6 @@
       chiliIngredients.forEach(item => {
         if (item.key === "chiliBeef") {
           const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
-          // Show alternative as lbs.
           const altLbs = (scaledWeight / 453.6).toFixed(1);
           scaledChili[item.key] = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
         } else {
