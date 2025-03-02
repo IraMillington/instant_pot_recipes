@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Recipes: Tikka Masala, Birria, Al Pastor & Chili</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #222;
+    }
+    .tab-buttons {
+      margin-bottom: 20px;
+    }
+    .tab-buttons button {
+      background-color: #ddd;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1em;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      margin-right: 2px;
+    }
+    .tab-buttons button.active {
+      background-color: #eef;
+      font-weight: bold;
+    }
+    .tab-content {
+      border: 1px solid #ddd;
+      background-color: #eef;
+      padding: 15px;
+      border-radius: 0 4px 4px 4px;
+      margin-bottom: 30px;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 10px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="number"],
+    select {
+      padding: 5px;
+      font-size: 1em;
+      width: 100px;
+      margin-left: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    /* Make the drop-down for "Type:" wider */
+    #chiliType {
+      width: 150px;
+    }
+    .scale-display {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    ol, ul {
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Recipes</h1>
+  <div class="tab-buttons">
+    <button id="btnChicken" class="active" onclick="showTab('chickenTab')">Chicken Tikka Masala & Raita</button>
+    <button id="btnBeef" onclick="showTab('beefTab')">Beef Birria Tacos</button>
+    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Chicken Al Pastor</button>
+    <button id="btnChili" onclick="showTab('chiliTab')">Chili</button>
+  </div>
+
+  <!-- Chicken Tikka Masala & Raita Tab -->
+  <div id="chickenTab" class="tab-content">
+    <h2>Chicken Tikka Masala &amp; Raita</h2>
+    <div class="section">
+      <p>
+        This recipe scales from a base of 1.5 lbs (662 g) of chicken. Adjust the chicken weight below to update the recipe instructions and shopping list. Each ingredient is shown with an intuitive kitchen measure (e.g. “1 cup”, “4 cloves”) with its weight (in grams or mL) in parentheses.
+      </p>
+    </div>
+    <div class="input-group">
+      <label for="chickenInput">Chicken (lbs):</label>
+      <input type="number" id="chickenInput" value="1.5" step="0.001" min="0">
+    </div>
+    <div class="scale-display">
+      Scale Factor: <span id="chickenScaleFactor">1.00</span>
+    </div>
+    <div id="chickenRecipe" class="section"></div>
+    <h3>Raita</h3>
+    <div id="raita" class="section"></div>
+    <h3>Shopping List</h3>
+    <div id="chickenShoppingList" class="section"></div>
+  </div>
+
+  <!-- Beef Birria Tacos Tab -->
+  <div id="beefTab" class="tab-content" style="display:none;">
+    <h2>Instant Pot Beef Birria Tacos</h2>
+    <div class="section">
+      <p>
+        Scale this birria taco recipe from a base of 3 lbs (1360 g) of beef. Adjust the beef weight below to update the instructions and shopping list. All ingredient amounts are expressed in grams with intuitive alternative measures.
+      </p>
+    </div>
+    <div class="input-group">
+      <label for="beefInput">Beef (lbs):</label>
+      <input type="number" id="beefInput" value="3" step="0.001" min="0">
+    </div>
+    <div class="scale-display">
+      Scale Factor: <span id="beefScaleFactor">1.00</span>
+    </div>
+    <div id="beefRecipe" class="section"></div>
+    <h3>Shopping List</h3>
+    <div id="beefShoppingList" class="section"></div>
+  </div>
+
+  <!-- Chicken Al Pastor Tab -->
+  <div id="alPastorTab" class="tab-content" style="display:none;">
+    <h2>Instant Pot Chicken Al Pastor</h2>
+    <div class="section">
+      <p>
+        Scale this Chicken Al Pastor recipe from a base of 2 lbs (≈900 g) of chicken. The marinade is tangy and savory (with less sweetness). Adjust the chicken weight below to update the recipe instructions and shopping list.
+      </p>
+    </div>
+    <div class="input-group">
+      <label for="alPastorInput">Chicken (lbs):</label>
+      <input type="number" id="alPastorInput" value="2" step="0.001" min="0">
+    </div>
+    <div class="scale-display">
+      Scale Factor: <span id="alPastorScaleFactor">1.00</span>
+    </div>
+    <div id="alPastorRecipe" class="section"></div>
+    <h3>Shopping List</h3>
+    <div id="alPastorShoppingList" class="section"></div>
+  </div>
+
+  <!-- Chili Tab -->
+  <div id="chiliTab" class="tab-content" style="display:none;">
+    <h2>Chili</h2>
+    <div class="section">
+      <p>
+        This chili recipe scales from a base of 1 lb (454 g) of beef. You can choose the beef type—Ground Beef or Chuck Roast—and adjust the beef weight below. The recipe is simple: brown the beef, then add spices and tomatoes. The spices are shown in teaspoon/tablespoon measures with the weight in grams in parentheses.
+      </p>
+    </div>
+    <div class="input-group">
+      <label for="chiliInput">Beef (lbs):</label>
+      <input type="number" id="chiliInput" value="1" step="0.001" min="0">
+      <label for="chiliType">Type:</label>
+      <select id="chiliType">
+        <option value="ground">Ground Beef</option>
+        <option value="chuck">Chuck Roast</option>
+      </select>
+    </div>
+    <div class="scale-display">
+      Scale Factor: <span id="chiliScaleFactor">1.00</span>
+    </div>
+    <div id="chiliRecipe" class="section"></div>
+    <h3>Shopping List</h3>
+    <div id="chiliShoppingList" class="section"></div>
+  </div>
+
+  <script>
+    // ----- Helper Functions -----
+    // Computes a scaled amount for an ingredient.
+    function getScaledAmount(item, scaleFactor) {
+      const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
+      let alt = "";
+      if (item.altValue !== null) {
+        if (!isNaN(parseFloat(item.altValue))) {
+          let altNumber = item.altValue * scaleFactor;
+          // For discrete units, round up.
+          if (["tsp", "tbsp", "cloves", "oz"].includes(item.altUnit)) {
+            altNumber = Math.ceil(altNumber);
+          } else if (item.altUnit === "cup") {
+            altNumber = Math.ceil(altNumber * 10) / 10;
+          } else {
+            altNumber = Math.ceil(altNumber);
+          }
+          alt = altNumber + " " + item.altUnit;
+        } else {
+          alt = item.altValue + (item.altUnit ? " " + item.altUnit : "");
+        }
+      }
+      return { weight: scaledWeight + " " + item.unit, alt: alt };
+    }
+    
+    // Returns a shopping list entry using a discrete measure if applicable.
+    function getShoppingListEntry(item, scaledItem) {
+      const discreteUnits = ["large onion", "tortilla", "lime", "bay leaves", "small bunch", "a pinch", "a handful of mint", "chiles", "chile", "can"];
+      if (item.altUnit && discreteUnits.includes(item.altUnit)) {
+        // Ensure a minimum of 1 is shown.
+        let parts = scaledItem.alt.split(" ");
+        let num = parseFloat(parts[0]);
+        if (!isNaN(num) && num < 1) {
+          return item.ingredient + ": 1 " + item.altUnit;
+        }
+        return item.ingredient + ": " + scaledItem.alt;
+      } else {
+        return item.ingredient;
+      }
+    }
+    
+    // ----- Chicken Tikka Masala & Raita -----
+    const baseChickenLbs = 1.5;
+    const chickenIngredients = [
+      { key: "chicken", ingredient: "Chicken (boneless, skinless)", baseAmount: 662, unit: "g", altValue: null, altUnit: "" },
+      { key: "yogurt", ingredient: "Plain Yogurt", baseAmount: 245, unit: "g", altValue: 1, altUnit: "cup" },
+      { key: "lemon", ingredient: "Lemon Juice", baseAmount: 30, unit: "mL", altValue: 2, altUnit: "tbsp" },
+      { key: "garlicMarinade", ingredient: "Minced Garlic", baseAmount: 12, unit: "g", altValue: 4, altUnit: "cloves" },
+      { key: "gingerMarinade", ingredient: "Grated Ginger", baseAmount: 6, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "garamMarinade", ingredient: "Garam Masala", baseAmount: 4, unit: "g", altValue: 2, altUnit: "tsp" },
+      { key: "cuminMarinade", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "corianderMarinade", ingredient: "Ground Coriander", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "paprikaMarinade", ingredient: "Paprika", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "turmeric", ingredient: "Turmeric Powder", baseAmount: 1, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "salt", ingredient: "Salt", baseAmount: 3, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "cayenne", ingredient: "Cayenne Pepper (optional)", baseAmount: 0.5, unit: "g", altValue: 0.25, altUnit: "tsp" },
+      { key: "chiliPowder", ingredient: "Spicy Chili Powder", baseAmount: 5, unit: "g", altValue: 2, altUnit: "tsp" },
+      { key: "butter", ingredient: "Butter or Ghee", baseAmount: 28, unit: "g", altValue: 2, altUnit: "tbsp" },
+      { key: "onion", ingredient: "Chopped Onion", baseAmount: 200, unit: "g", altValue: 1, altUnit: "large onion" },
+      { key: "garlicSauce", ingredient: "Minced Garlic", baseAmount: 9, unit: "g", altValue: 3, altUnit: "cloves" },
+      { key: "gingerSauce", ingredient: "Grated Ginger", baseAmount: 6, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "tomato", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: 14, altUnit: "oz" },
+      { key: "garamSauce", ingredient: "Garam Masala", baseAmount: 4, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "cuminSauce", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "corianderSauce", ingredient: "Ground Coriander", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "paprikaSauce", ingredient: "Paprika", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "cream", ingredient: "Heavy Cream or Coconut Milk", baseAmount: 240, unit: "mL", altValue: 1, altUnit: "cup" }
+    ];
+    const raitaIngredients = [
+      { key: "raitaYogurt", ingredient: "Plain Yogurt", baseAmount: 245, unit: "g", altValue: 1, altUnit: "cup" },
+      { key: "cucumber", ingredient: "Diced Cucumber", baseAmount: 75, unit: "g", altValue: 0.5, altUnit: "cup" },
+      { key: "roastedCumin", ingredient: "Roasted Cumin Powder", baseAmount: 1, unit: "g", altValue: "a pinch", altUnit: "" },
+      { key: "raitaSalt", ingredient: "Salt", baseAmount: 0.5, unit: "g", altValue: "a pinch", altUnit: "" },
+      { key: "mint", ingredient: "Chopped Fresh Mint", baseAmount: 10, unit: "g", altValue: "a handful of", altUnit: "mint" }
+    ];
+    
+    function updateChickenRecipe() {
+      const chickenInput = document.getElementById("chickenInput");
+      let chickenWeight = parseFloat(chickenInput.value);
+      if (isNaN(chickenWeight) || chickenWeight <= 0) { chickenWeight = baseChickenLbs; }
+      const scaleFactor = chickenWeight / baseChickenLbs;
+      document.getElementById("chickenScaleFactor").textContent = scaleFactor.toFixed(2);
+      
+      let scaled = {};
+      chickenIngredients.forEach(item => {
+        scaled[item.key] = getScaledAmount(item, scaleFactor);
+      });
+      
+      let recipeHtml = "<ol>";
+      recipeHtml += "<li><strong>Marinate the Chicken:</strong> In a bowl, mix " +
+                    scaled.yogurt.alt + " (" + scaled.yogurt.weight + ") plain yogurt, " +
+                    scaled.lemon.alt + " (" + scaled.lemon.weight + ") lemon juice, " +
+                    scaled.garlicMarinade.alt + " (" + scaled.garlicMarinade.weight + ") minced garlic, " +
+                    scaled.gingerMarinade.alt + " (" + scaled.gingerMarinade.weight + ") grated ginger, and spices (" +
+                    scaled.garamMarinade.alt + ", " + scaled.cuminMarinade.alt + ", " +
+                    scaled.corianderMarinade.alt + ", " + scaled.paprikaMarinade.alt + ", " +
+                    scaled.turmeric.alt + ", " + scaled.salt.alt + ", " + scaled.cayenne.alt + ", " +
+                    scaled.chiliPowder.alt + "). Add " + scaled.chicken.weight + " chicken pieces, toss to coat, and refrigerate for at least 30 minutes.</li>";
+      recipeHtml += "<li><strong>Sauté:</strong> Set the Instant Pot to Sauté. Melt " +
+                    scaled.butter.alt + " (" + scaled.butter.weight + ") butter or ghee, add " +
+                    scaled.onion.alt + " (" + scaled.onion.weight + ") chopped onion, and cook until softened (≈5 minutes). Then stir in " +
+                    scaled.garlicSauce.alt + " (" + scaled.garlicSauce.weight + ") garlic and " +
+                    scaled.gingerSauce.alt + " (" + scaled.gingerSauce.weight + ") ginger for another minute.</li>";
+      recipeHtml += "<li><strong>Cook Chicken:</strong> Add the marinated chicken and sauté until lightly browned (≈5 minutes).</li>";
+      recipeHtml += "<li><strong>Add Tomatoes &amp; Spices:</strong> Pour in " +
+                    scaled.tomato.alt + " (" + scaled.tomato.weight + ") crushed tomatoes. Stir in " +
+                    scaled.garamSauce.alt + " (" + scaled.garamSauce.weight + "), " +
+                    scaled.cuminSauce.alt + " (" + scaled.cuminSauce.weight + "), " +
+                    scaled.corianderSauce.alt + " (" + scaled.corianderSauce.weight + "), and " +
+                    scaled.paprikaSauce.alt + " (" + scaled.paprikaSauce.weight + "). Mix well.</li>";
+      recipeHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and cook on high pressure for 8 minutes. Allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
+      recipeHtml += "<li><strong>Finish:</strong> Stir in " + scaled.cream.alt + " (" + scaled.cream.weight + ") cream or coconut milk until smooth. Adjust seasoning and garnish with chopped cilantro. Serve with rice or naan.</li>";
+      recipeHtml += "</ol>";
+      
+      document.getElementById("chickenRecipe").innerHTML = recipeHtml;
+      
+      let fixedRaita = {};
+      raitaIngredients.forEach(item => {
+        fixedRaita[item.key] = getScaledAmount(item, 1);
+      });
+      let raitaHtml = "<ol>";
+      raitaHtml += "<li><strong>Raita:</strong> In a bowl, combine " +
+                   fixedRaita.raitaYogurt.alt + " (" + fixedRaita.raitaYogurt.weight + ") plain yogurt, " +
+                   fixedRaita.cucumber.alt + " (" + fixedRaita.cucumber.weight + ") diced cucumber, " +
+                   fixedRaita.roastedCumin.alt + " (" + fixedRaita.roastedCumin.weight + ") roasted cumin, " +
+                   fixedRaita.raitaSalt.alt + " (" + fixedRaita.raitaSalt.weight + ") salt, and " +
+                   fixedRaita.mint.alt + " " + fixedRaita.mint.weight + " chopped mint. Mix and chill for 15 minutes.</li>";
+      raitaHtml += "</ol>";
+      
+      document.getElementById("raita").innerHTML = raitaHtml;
+      
+      let shoppingHtml = "<ul>";
+      chickenIngredients.concat(raitaIngredients).forEach(item => {
+        let factor = chickenIngredients.includes(item) ? scaleFactor : 1;
+        let scaledItem = getScaledAmount(item, factor);
+        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
+      });
+      shoppingHtml += "</ul>";
+      
+      document.getElementById("chickenShoppingList").innerHTML = shoppingHtml;
+    }
+    
+    // ----- Beef Birria Tacos -----
+    const baseBeefLbs = 3;
+    const beefIngredients = [
+      { key: "beef", ingredient: "Beef Chuck Roast", baseAmount: 1360, unit: "g", altValue: null, altUnit: "" },
+      { key: "guajillo", ingredient: "Dried Guajillo Chiles", baseAmount: 8, unit: "g", altValue: 2, altUnit: "chiles" },
+      { key: "ancho", ingredient: "Dried Ancho Chiles", baseAmount: 12, unit: "g", altValue: 2, altUnit: "chiles" },
+      { key: "chipotle", ingredient: "Dried Chipotle Chile (optional)", baseAmount: 3, unit: "g", altValue: 1, altUnit: "chile" },
+      { key: "onion", ingredient: "Large Onion (quartered)", baseAmount: 150, unit: "g", altValue: 1, altUnit: "large onion" },
+      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 12, unit: "g", altValue: 12, altUnit: "g" },
+      { key: "tomato", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: 14, altUnit: "oz" },
+      { key: "broth", ingredient: "Beef Broth", baseAmount: 120, unit: "g", altValue: 0.5, altUnit: "cup" },
+      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 60, unit: "g", altValue: 0.25, altUnit: "cup" },
+      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2.5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "cinnamon", ingredient: "Ground Cinnamon", baseAmount: 1.25, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "bay", ingredient: "Bay Leaves", baseAmount: 2, unit: "", altValue: "2", altUnit: "bay leaves" },
+      { key: "water", ingredient: "Water (for blending)", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "tortilla", ingredient: "Corn Tortillas", baseAmount: 30, unit: "g", altValue: 1, altUnit: "tortilla" },
+      { key: "tacoOnion", ingredient: "Chopped White Onion (topping)", baseAmount: 50, unit: "g", altValue: 0.25, altUnit: "cup" },
+      { key: "cilantro", ingredient: "Chopped Fresh Cilantro (topping)", baseAmount: 10, unit: "g", altValue: 1, altUnit: "small bunch" },
+      { key: "lime", ingredient: "Lime Wedge", baseAmount: 70, unit: "g", altValue: 1, altUnit: "lime" }
+    ];
+    
+    function updateBeefRecipe() {
+      const beefInput = document.getElementById("beefInput");
+      let beefWeight = parseFloat(beefInput.value);
+      if (isNaN(beefWeight) || beefWeight <= 0) { beefWeight = baseBeefLbs; }
+      const scaleFactor = beefWeight / baseBeefLbs;
+      document.getElementById("beefScaleFactor").textContent = scaleFactor.toFixed(2);
+      
+      let scaledBeef = {};
+      beefIngredients.forEach(item => {
+        if (item.key === "beef") {
+          const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
+          const altLbs = (scaledWeight / 453.6).toFixed(1);
+          scaledBeef[item.key] = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
+        } else {
+          scaledBeef[item.key] = getScaledAmount(item, scaleFactor);
+        }
+      });
+      
+      let beefHtml = "<ol>";
+      beefHtml += "<li><strong>Prep the Chiles:</strong> Remove stems and seeds from the guajillo, ancho, and chipotle chiles. Toast them lightly (≈1 minute per side) and soak in hot water for 20 minutes. Drain (reserve 15–30 g of soaking water).</li>";
+      beefHtml += "<li><strong>Blend the Sauce:</strong> In a blender, combine the soaked chiles, " +
+                  scaledBeef.onion.alt + " (" + scaledBeef.onion.weight + ") quartered onion, " +
+                  scaledBeef.garlic.alt + " (" + scaledBeef.garlic.weight + ") minced garlic, " +
+                  scaledBeef.tomato.alt + " (" + scaledBeef.tomato.weight + ") crushed tomatoes, " +
+                  scaledBeef.vinegar.alt + " (" + scaledBeef.vinegar.weight + ") vinegar, " +
+                  scaledBeef.broth.alt + " (" + scaledBeef.broth.weight + ") beef broth, " +
+                  scaledBeef.cumin.alt + " (" + scaledBeef.cumin.weight + "), " +
+                  scaledBeef.oregano.alt + " (" + scaledBeef.oregano.weight + "), and " +
+                  scaledBeef.cinnamon.alt + " (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed.</li>";
+      beefHtml += "<li><strong>Sear the Beef:</strong> Season " + scaledBeef.beef.weight + " of beef with salt and pepper. Sauté in the Instant Pot with about 15 g oil until well browned in batches.</li>";
+      beefHtml += "<li><strong>Pressure Cook:</strong> Return the beef to the pot, add the blended sauce and " + scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for 45 minutes; allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
+      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Discard bay leaves, shred the beef, and warm the tortillas (≈" + scaledBeef.tortilla.alt + "). Dip them briefly in the broth, then fill with beef and top with " +
+                  scaledBeef.tacoOnion.alt + " (" + scaledBeef.tacoOnion.weight + ") chopped onion, " +
+                  scaledBeef.cilantro.alt + " (" + scaledBeef.cilantro.weight + ") cilantro, and a " +
+                  scaledBeef.lime.alt + " (" + scaledBeef.lime.weight + ") wedge of lime.</li>";
+      beefHtml += "</ol>";
+      
+      document.getElementById("beefRecipe").innerHTML = beefHtml;
+      
+      let shoppingHtml = "<ul>";
+      beefIngredients.forEach(item => {
+        let factor = (item.key === "beef") ? 1 : scaleFactor;
+        let scaledItem;
+        if (item.key === "beef") {
+          const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
+          const altLbs = (scaledWeight / 453.6).toFixed(1);
+          scaledItem = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
+        } else {
+          scaledItem = getScaledAmount(item, factor);
+        }
+        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
+      });
+      shoppingHtml += "</ul>";
+      
+      document.getElementById("beefShoppingList").innerHTML = shoppingHtml;
+    }
+    
+    // ----- Chicken Al Pastor -----
+    const baseAlPastorLbs = 2;
+    const alPastorIngredients = [
+      { key: "alPastorChicken", ingredient: "Chicken (boneless, skinless)", baseAmount: 900, unit: "g", altValue: null, altUnit: "" },
+      { key: "pineappleJuice", ingredient: "Pineapple Juice", baseAmount: 80, unit: "mL", altValue: 0.33, altUnit: "cup" },
+      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 20, unit: "mL", altValue: 1, altUnit: "tbsp" },
+      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 10, unit: "g", altValue: 3, altUnit: "cloves" },
+      { key: "ginger", ingredient: "Grated Ginger", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 4, unit: "g", altValue: 1.5, altUnit: "tsp" },
+      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "salt", ingredient: "Salt", baseAmount: 3, unit: "g", altValue: 0.5, altUnit: "tsp" },
+      { key: "pepper", ingredient: "Black Pepper", baseAmount: 1, unit: "g", altValue: 0.25, altUnit: "tsp" },
+      { key: "achiote", ingredient: "Achiote Paste", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
+      { key: "chipotle", ingredient: "Chipotle in Adobo (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
+      { key: "alPastorOnion", ingredient: "Sliced Onion", baseAmount: 100, unit: "g", altValue: 0.5, altUnit: "large onion" },
+      { key: "pineappleChunks", ingredient: "Pineapple Chunks", baseAmount: 150, unit: "g", altValue: 0.75, altUnit: "cup" }
+    ];
+    
+    function updateAlPastorRecipe() {
+      const alPastorInput = document.getElementById("alPastorInput");
+      let alPastorWeight = parseFloat(alPastorInput.value);
+      if (isNaN(alPastorWeight) || alPastorWeight <= 0) { alPastorWeight = baseAlPastorLbs; }
+      const scaleFactor = alPastorWeight / baseAlPastorLbs;
+      document.getElementById("alPastorScaleFactor").textContent = scaleFactor.toFixed(2);
+      
+      let scaledAP = {};
+      alPastorIngredients.forEach(item => {
+        scaledAP[item.key] = getScaledAmount(item, scaleFactor);
+      });
+      
+      let alPastorHtml = "<ol>";
+      alPastorHtml += "<li><strong>Marinate:</strong> In a bowl, combine " +
+                       scaledAP.pineappleJuice.alt + " (" + scaledAP.pineappleJuice.weight + ") pineapple juice, " +
+                       scaledAP.vinegar.alt + " (" + scaledAP.vinegar.weight + ") vinegar, " +
+                       scaledAP.garlic.alt + " (" + scaledAP.garlic.weight + ") minced garlic, " +
+                       scaledAP.ginger.alt + " (" + scaledAP.ginger.weight + ") grated ginger, " +
+                       scaledAP.chiliPowder.alt + " (" + scaledAP.chiliPowder.weight + ") chili powder, " +
+                       scaledAP.cumin.alt + " (" + scaledAP.cumin.weight + ") ground cumin, " +
+                       scaledAP.oregano.alt + " (" + scaledAP.oregano.weight + ") oregano, " +
+                       scaledAP.salt.alt + " (" + scaledAP.salt.weight + ") salt, and " +
+                       scaledAP.pepper.alt + " (" + scaledAP.pepper.weight + ") black pepper. Stir in " +
+                       scaledAP.achiote.alt + " (" + scaledAP.achiote.weight + ") achiote paste and, if using, " +
+                       scaledAP.chipotle.alt + " (" + scaledAP.chipotle.weight + ") chipotle. Add " +
+                       scaledAP.alPastorOnion.alt + " (" + scaledAP.alPastorOnion.weight + ") sliced onion and " +
+                       scaledAP.pineappleChunks.alt + " (" + scaledAP.pineappleChunks.weight + ") pineapple chunks. Marinate the chicken (about " + getScaledAmount(alPastorIngredients[0], scaleFactor).weight + ") for at least 1 hour.</li>";
+      alPastorHtml += "<li><strong>Sauté &amp; Pressure Cook:</strong> Set the Instant Pot to Sauté. Briefly sauté the marinated chicken with a little oil, then secure the lid and pressure cook on high for 8 minutes. Allow a natural release for 10 minutes.</li>";
+      alPastorHtml += "<li><strong>Serve:</strong> Shred the chicken and serve on warm tortillas with your favorite toppings.</li>";
+      alPastorHtml += "</ol>";
+      
+      document.getElementById("alPastorRecipe").innerHTML = alPastorHtml;
+      
+      let shoppingHtml = "<ul>";
+      alPastorIngredients.forEach(item => {
+        let scaledItem = getScaledAmount(item, scaleFactor);
+        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
+      });
+      shoppingHtml += "</ul>";
+      
+      document.getElementById("alPastorShoppingList").innerHTML = shoppingHtml;
+    }
+    
+    // ----- Chili -----
+    const baseChiliLbs = 1; // Base: 1 lb (454 g) of beef
+    const chiliIngredients = [
+      { key: "chiliBeef", ingredient: "Beef", baseAmount: 454, unit: "g", altValue: null, altUnit: "" },
+      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 20, unit: "g", altValue: 2, altUnit: "tbsp" },
+      { key: "crushedTomatoes", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: "1", altUnit: "can" },
+      { key: "greenChilis", ingredient: "Green Chilis", baseAmount: 227, unit: "g", altValue: "1", altUnit: "can" },
+      { key: "cayenne", ingredient: "Cayenne Pepper", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" }
+    ];
+    
+    function updateChiliRecipe() {
+      const chiliInput = document.getElementById("chiliInput");
+      let chiliWeight = parseFloat(chiliInput.value);
+      if (isNaN(chiliWeight) || chiliWeight <= 0) { chiliWeight = baseChiliLbs; }
+      const scaleFactor = chiliWeight / baseChiliLbs;
+      document.getElementById("chiliScaleFactor").textContent = scaleFactor.toFixed(2);
+      
+      let selectedType = document.getElementById("chiliType").value; // "ground" or "chuck"
+      
+      let scaledChili = {};
+      chiliIngredients.forEach(item => {
+        if (item.key === "chiliBeef") {
+          const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
+          // Show alternative as lbs.
+          const altLbs = (scaledWeight / 453.6).toFixed(1);
+          scaledChili[item.key] = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
+        } else {
+          scaledChili[item.key] = getScaledAmount(item, scaleFactor);
+        }
+      });
+      
+      let chiliHtml = "<ol>";
+      chiliHtml += "<li><strong>Sauté the Beef:</strong> Set the Instant Pot to Sauté. Brown the " + scaledChili.chiliBeef.alt + " (" + scaledChili.chiliBeef.weight + ") " + (selectedType === "ground" ? "ground beef" : "chuck roast, cut into chunks") + " until well browned.</li>";
+      chiliHtml += "<li><strong>Add Spices &amp; Tomatoes:</strong> Stir in " +
+                   scaledChili.chiliPowder.alt + " (" + scaledChili.chiliPowder.weight + ") chili powder, " +
+                   scaledChili.crushedTomatoes.alt + " (" + scaledChili.crushedTomatoes.weight + ") crushed tomatoes, " +
+                   scaledChili.greenChilis.alt + " (" + scaledChili.greenChilis.weight + ") green chilis, and " +
+                   scaledChili.cayenne.alt + " (" + scaledChili.cayenne.weight + ") cayenne pepper.</li>";
+      if(selectedType === "ground") {
+        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 10 minutes. Then quick-release the pressure.</li>";
+      } else {
+        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 20 minutes. Allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
+      }
+      chiliHtml += "<li><strong>Simmer:</strong> Switch to Sauté mode and let the chili simmer for 5–10 minutes, stirring occasionally, to blend the flavors.</li>";
+      chiliHtml += "</ol>";
+      
+      document.getElementById("chiliRecipe").innerHTML = chiliHtml;
+      
+      let shoppingHtml = "<ul>";
+      chiliIngredients.forEach(item => {
+        let scaledItem = (item.key === "chiliBeef") ? 
+          { weight: Math.ceil(item.baseAmount * scaleFactor) + " " + item.unit, alt: ((Math.ceil(item.baseAmount * scaleFactor))/453.6).toFixed(1) + " lbs" } :
+          getScaledAmount(item, scaleFactor);
+        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
+      });
+      shoppingHtml += "</ul>";
+      
+      document.getElementById("chiliShoppingList").innerHTML = shoppingHtml;
+    }
+    
+    // ----- Tab Navigation -----
+    function showTab(tabId) {
+      document.getElementById("chickenTab").style.display = "none";
+      document.getElementById("beefTab").style.display = "none";
+      document.getElementById("alPastorTab").style.display = "none";
+      document.getElementById("chiliTab").style.display = "none";
+      document.getElementById("btnChicken").classList.remove("active");
+      document.getElementById("btnBeef").classList.remove("active");
+      document.getElementById("btnAlPastor").classList.remove("active");
+      document.getElementById("btnChili").classList.remove("active");
+      
+      document.getElementById(tabId).style.display = "block";
+      if(tabId === "chickenTab") {
+        document.getElementById("btnChicken").classList.add("active");
+      } else if(tabId === "beefTab") {
+        document.getElementById("btnBeef").classList.add("active");
+      } else if(tabId === "alPastorTab") {
+        document.getElementById("btnAlPastor").classList.add("active");
+      } else if(tabId === "chiliTab") {
+        document.getElementById("btnChili").classList.add("active");
+      }
+    }
+    
+    // ----- Event Listeners & Initialization -----
+    document.getElementById("chickenInput").addEventListener("input", updateChickenRecipe);
+    document.getElementById("beefInput")?.addEventListener("input", updateBeefRecipe);
+    document.getElementById("alPastorInput").addEventListener("input", updateAlPastorRecipe);
+    document.getElementById("chiliInput").addEventListener("input", updateChiliRecipe);
+    document.getElementById("chiliType").addEventListener("change", updateChiliRecipe);
+    
+    window.onload = function() {
+      updateChickenRecipe();
+      if(document.getElementById("beefInput")) { updateBeefRecipe(); }
+      updateAlPastorRecipe();
+      updateChiliRecipe();
+    }
+  </script>
+  
+  <!-- Hidden inputs for Beef, Al Pastor, and Chili -->
+  <div style="display:none;">
+    <input type="number" id="beefInput" value="3" step="0.001" min="0">
+    <span class="scale-display">Scale Factor: <span id="beefScaleFactor">1.00</span></span>
+    <input type="number" id="alPastorInput" value="2" step="0.001" min="0">
+    <span class="scale-display">Scale Factor: <span id="alPastorScaleFactor">1.00</span></span>
+    <input type="number" id="chiliInput" value="1" step="0.001" min="0">
+    <span class="scale-display">Scale Factor: <span id="chiliScaleFactor">1.00</span></span>
+  </div>
+  
+  <!-- Hidden container for chili shopping list -->
+  <div id="chiliShoppingList" class="section" style="display:none;"></div>
+  
+  <!-- Hidden dropdown for chili type is already visible in the Chili tab -->
+  
+</body>
+</html>
