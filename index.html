@@ -395,13 +395,10 @@
                   scaledBeef.broth.alt + " (" + scaledBeef.broth.weight + ") beef broth, " +
                   scaledBeef.cumin.alt + " ground cumin (" + scaledBeef.cumin.weight + "), " +
                   scaledBeef.oregano.alt + " dried oregano (" + scaledBeef.oregano.weight + "), and " +
-                  scaledBeef.cinnamon.alt + " ground cinnamon (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed.</li>";
+                  scaledBeef.cinnamon.alt + " ground cinnamon (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed. (Note: You can use less crushed tomatoes if you prefer a shorter sauté time.)</li>";
       beefHtml += "<li><strong>Sear the Beef:</strong> Season " + scaledBeef.beef.weight + " of beef with salt and pepper. Sauté in the Instant Pot with about 15 g oil until well browned in batches.</li>";
       beefHtml += "<li><strong>Pressure Cook:</strong> Return the beef to the pot, add the blended sauce and " + scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for 45 minutes; allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
-      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Discard bay leaves, shred the beef, and warm the tortillas (≈" + scaledBeef.tortilla.alt + "). Dip them briefly in the broth, then fill with beef and top with " +
-                  scaledBeef.tacoOnion.alt + " (" + scaledBeef.tacoOnion.weight + ") chopped onion, " +
-                  scaledBeef.cilantro.alt + " (" + scaledBeef.cilantro.weight + ") cilantro, and a " +
-                  scaledBeef.lime.alt + " (" + scaledBeef.lime.weight + ") wedge of lime.</li>";
+      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and top it with the shredded beef. After about 2 minutes (adjust if needed), use a spatula to fold the tortilla in half and press it down. Continue cooking for another 1–2 minutes until golden and crisp, then remove and serve.</li>";
       beefHtml += "</ol>";
       
       document.getElementById("beefRecipe").innerHTML = beefHtml;
@@ -494,7 +491,7 @@
                    scaledChili.chiliPowder.alt + " (" + scaledChili.chiliPowder.weight + ") chili powder, " +
                    scaledChili.crushedTomatoes.alt + " (" + scaledChili.crushedTomatoes.weight + ") crushed tomatoes, " +
                    scaledChili.greenChilis.alt + " (" + scaledChili.greenChilis.weight + ") green chilis, and " +
-                   scaledChili.cayenne.alt + " (" + scaledChili.cayenne.weight + ") cayenne pepper.</li>";
+                   scaledChili.cayenne.alt + " (" + scaledChili.cayenne.weight + ") cayenne pepper. (Note: You can use less crushed tomatoes if you prefer a shorter sauté time.)</li>";
       if(selectedType === "ground") {
         chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 10 minutes. Then quick-release the pressure.</li>";
       } else {
