@@ -309,6 +309,7 @@
       });
       
       let recipeHtml = "<ol>";
+      // Marinate step: without cayenne and chili powder.
       recipeHtml += "<li><strong>Marinate the Chicken:</strong> In a bowl, mix " +
                     scaled.yogurt.alt + " (" + scaled.yogurt.weight + ") plain yogurt, " +
                     scaled.lemon.alt + " (" + scaled.lemon.weight + ") lemon juice, " +
@@ -319,9 +320,7 @@
                     "Ground Coriander (" + scaled.corianderMarinade.alt + ", " + scaled.corianderMarinade.weight + "), " +
                     "Paprika (" + scaled.paprikaMarinade.alt + ", " + scaled.paprikaMarinade.weight + "), " +
                     "Turmeric (" + scaled.turmeric.alt + ", " + scaled.turmeric.weight + "), " +
-                    "Salt (" + scaled.salt.alt + ", " + scaled.salt.weight + "), " +
-                    "Cayenne Pepper (" + scaled.cayenne.alt + ", " + scaled.cayenne.weight + "), " +
-                    "Chili Powder (" + scaled.chiliPowder.alt + ", " + scaled.chiliPowder.weight + "). " +
+                    "Salt (" + scaled.salt.alt + ", " + scaled.salt.weight + "). " +
                     "Add " + scaled.chicken.weight + " chicken pieces, toss to coat, and refrigerate for at least 30 minutes.</li>";
       recipeHtml += "<li><strong>Sauté:</strong> Set the Instant Pot to Sauté. Melt " +
                     scaled.butter.alt + " (" + scaled.butter.weight + ") butter or ghee, add " +
@@ -329,12 +328,14 @@
                     scaled.garlicSauce.alt + " (" + scaled.garlicSauce.weight + ") garlic and " +
                     scaled.gingerSauce.alt + " (" + scaled.gingerSauce.weight + ") ginger for another minute.</li>";
       recipeHtml += "<li><strong>Cook Chicken:</strong> Add the marinated chicken and sauté until lightly browned (≈5 minutes).</li>";
+      // Sauce step: list named spices with optional hyperlink for spicy chili powder.
       recipeHtml += "<li><strong>Add Tomatoes &amp; Spices:</strong> Pour in " +
                     scaled.tomato.alt + " (" + scaled.tomato.weight + ") crushed tomatoes. Stir in " +
-                    scaled.garamSauce.alt + " (" + scaled.garamSauce.weight + "), " +
-                    scaled.cuminSauce.alt + " (" + scaled.cuminSauce.weight + "), " +
-                    scaled.corianderSauce.alt + " (" + scaled.corianderSauce.weight + "), and " +
-                    scaled.paprikaSauce.alt + " (" + scaled.paprikaSauce.weight + "). Mix well.</li>";
+                    "Garam Masala (" + scaled.garamSauce.alt + ", " + scaled.garamSauce.weight + "), " +
+                    "Ground Cumin (" + scaled.cuminSauce.alt + ", " + scaled.cuminSauce.weight + "), " +
+                    "Ground Coriander (" + scaled.corianderSauce.alt + ", " + scaled.corianderSauce.weight + "), and " +
+                    "Paprika (" + scaled.paprikaSauce.alt + ", " + scaled.paprikaSauce.weight + "). " +
+                    "Optional: add <a href=\"https://www.amazon.com/dp/B01FN2MY6W?ref=nb_sb_ss_w_as-reorder_k0_1_18&amp;crid=KF6E8OXQGZ71&amp;sprefix=spicy+chili+powder\" target=\"_blank\">Spicy Chili Powder</a> to taste (suggested maximum 4 g for 1.5 lbs chicken). Mix well.</li>";
       recipeHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and cook on high pressure for 8 minutes. Allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
       recipeHtml += "<li><strong>Finish:</strong> Stir in " + scaled.cream.alt + " (" + scaled.cream.weight + ") cream or coconut milk until smooth. Adjust seasoning and garnish with chopped cilantro. Serve with rice or naan.</li>";
       recipeHtml += "</ol>";
@@ -398,7 +399,7 @@
                   scaledBeef.cinnamon.alt + " ground cinnamon (" + scaledBeef.cinnamon.weight + "). Blend until smooth, adding reserved water if needed. (Note: You can use less crushed tomatoes if you prefer a shorter sauté time.)</li>";
       beefHtml += "<li><strong>Sear the Beef:</strong> Season " + scaledBeef.beef.weight + " of beef with salt and pepper. Sauté in the Instant Pot with about 15 g oil until well browned in batches.</li>";
       beefHtml += "<li><strong>Pressure Cook:</strong> Return the beef to the pot, add the blended sauce and " + scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for 45 minutes; allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
-      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and top it with the shredded beef. After about 2 minutes (adjust if needed), use a spatula to fold the tortilla in half and press it down. Continue cooking for another 1–2 minutes until golden and crisp, then remove and serve.</li>";
+      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and add a layer of cheese followed by a layer of the shredded beef. Top with chopped onions and cilantro. After about 2 minutes (adjust if needed), fold the tortilla in half and press it down. Continue cooking for another 1–2 minutes until golden and crisp, then remove and serve.</li>";
       beefHtml += "</ol>";
       
       document.getElementById("beefRecipe").innerHTML = beefHtml;
