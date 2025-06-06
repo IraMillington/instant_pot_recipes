@@ -374,7 +374,14 @@
         if (isNaN(beefWeight) || beefWeight <= 0) { beefWeight = baseBeefLbs; }
         const scaleFactor = beefWeight / baseBeefLbs;
         document.getElementById("beefScaleFactor").textContent = scaleFactor.toFixed(2);
-        const cookMinutes = Math.round((beefWeight / 1.5) * 60);
+        function getCookMinutes(weight) {
+          if (weight <= 2) return 45; // keeping roast whole
+          if (weight <= 3) return 60;
+          if (weight <= 4) return 90;
+          if (weight <= 5) return 110;
+          return Math.round(weight * 20);
+        }
+        const cookMinutes = getCookMinutes(beefWeight);
       
       let scaledBeef = {};
       beefIngredients.forEach(item => {
@@ -401,9 +408,8 @@
       beefHtml += "<li><strong>Sear the Beef:</strong> Season " + scaledBeef.beef.weight + " of beef with salt and pepper. Sauté in the Instant Pot with about 15 g oil until well browned in batches.</li>";
         beefHtml += "<li><strong>Pressure Cook:</strong> Return the beef to the pot, add the blended sauce and " +
                      scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for " + cookMinutes +
-                     " minutes (about 1 hour for 1.5 lbs; increase the time proportionally with weight). " +
-                     "Allow a natural release for 10 minutes, then quick-release any remaining pressure. " +
-                     "If the beef isn't tender, continue pressure cooking in 15-minute increments until it is.</li>";
+                     " minutes. Allow a natural release for 15 minutes, then quick-release any remaining pressure. " +
+                     "If the beef isn't tender, reseal the pot and pressure cook in additional 15-minute increments until tender.</li>";
       beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and add a layer of cheese followed by a layer of the shredded beef. Top with chopped onions and cilantro. After about 2 minutes (adjust if needed), fold the tortilla in half and press it down. Continue cooking for another 1–2 minutes until golden and crisp, then remove and serve.</li>";
       beefHtml += "</ol>";
       
