@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Interactive Recipes: Tikka Masala, Birria, Al Pastor & Chili</title>
+  <title>Interactive Recipes: Tikka Masala & Quesabirria</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -56,10 +56,6 @@
       border: 1px solid #ccc;
       border-radius: 3px;
     }
-    /* Make the drop-down for "Type:" wider */
-    #chiliType {
-      width: 150px;
-    }
     .scale-display {
       font-style: italic;
       margin-bottom: 10px;
@@ -77,8 +73,7 @@
   <div class="tab-buttons">
     <button id="btnChicken" class="active" onclick="showTab('chickenTab')">Chicken Tikka Masala & Raita</button>
     <button id="btnBeef" onclick="showTab('beefTab')">Quesabirria</button>
-    <button id="btnAlPastor" onclick="showTab('alPastorTab')">Chicken Al Pastor</button>
-    <button id="btnChili" onclick="showTab('chiliTab')">Chili</button>
+    
   </div>
 
   <!-- Chicken Tikka Masala & Raita Tab -->
@@ -123,50 +118,7 @@
     <div id="beefShoppingList" class="section"></div>
   </div>
 
-  <!-- Chicken Al Pastor Tab -->
-  <div id="alPastorTab" class="tab-content" style="display:none;">
-    <h2>Instant Pot Chicken Al Pastor</h2>
-    <div class="section">
-      <p>
-        Scale this Chicken Al Pastor recipe from a base of 2 lbs (≈900 g) of chicken. The marinade is tangy and savory (with less sweetness). Adjust the chicken weight below to update the recipe instructions and shopping list.
-      </p>
-    </div>
-    <div class="input-group">
-      <label for="alPastorInput">Chicken (lbs):</label>
-      <input type="number" id="alPastorInput" value="2" step="0.001" min="0">
-    </div>
-    <div class="scale-display">
-      Scale Factor: <span id="alPastorScaleFactor">1.00</span>
-    </div>
-    <div id="alPastorRecipe" class="section"></div>
-    <h3>Shopping List</h3>
-    <div id="alPastorShoppingList" class="section"></div>
-  </div>
 
-  <!-- Chili Tab -->
-  <div id="chiliTab" class="tab-content" style="display:none;">
-    <h2>Instant Pot Chili</h2>
-    <div class="section">
-      <p>
-        This chili recipe scales from a base of 1 lb (454 g) of beef. You can choose the beef type—Ground Beef or Chuck Roast—and adjust the beef weight below. The recipe is simple: brown the beef, then add spices and tomatoes. The spices are shown in teaspoon/tablespoon measures with the weight in grams in parentheses.
-      </p>
-    </div>
-    <div class="input-group">
-      <label for="chiliInput">Beef (lbs):</label>
-      <input type="number" id="chiliInput" value="1" step="0.001" min="0">
-      <label for="chiliType">Type:</label>
-      <select id="chiliType">
-        <option value="ground">Ground Beef</option>
-        <option value="chuck">Chuck Roast</option>
-      </select>
-    </div>
-    <div class="scale-display">
-      Scale Factor: <span id="chiliScaleFactor">1.00</span>
-    </div>
-    <div id="chiliRecipe" class="section"></div>
-    <h3>Shopping List</h3>
-    <div id="chiliShoppingList" class="section"></div>
-  </div>
 
   <script>
     // ----- Helper Functions -----
@@ -277,34 +229,7 @@
       { key: "lime", ingredient: "Lime Wedge", baseAmount: 70, unit: "g", altValue: 1, altUnit: "lime" }
     ];
     
-    // ----- Chicken Al Pastor -----
-    const baseAlPastorLbs = 2;
-    const alPastorIngredients = [
-      { key: "alPastorChicken", ingredient: "Chicken (boneless, skinless)", baseAmount: 900, unit: "g", altValue: null, altUnit: "" },
-      { key: "pineappleJuice", ingredient: "Pineapple Juice", baseAmount: 80, unit: "mL", altValue: 0.33, altUnit: "cup" },
-      { key: "vinegar", ingredient: "Apple Cider Vinegar", baseAmount: 20, unit: "mL", altValue: 1, altUnit: "tbsp" },
-      { key: "garlic", ingredient: "Minced Garlic", baseAmount: 10, unit: "g", altValue: 3, altUnit: "cloves" },
-      { key: "ginger", ingredient: "Grated Ginger", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 4, unit: "g", altValue: 1.5, altUnit: "tsp" },
-      { key: "cumin", ingredient: "Ground Cumin", baseAmount: 2, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "oregano", ingredient: "Dried Oregano", baseAmount: 1, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "salt", ingredient: "Salt", baseAmount: 3, unit: "g", altValue: 0.5, altUnit: "tsp" },
-      { key: "pepper", ingredient: "Black Pepper", baseAmount: 1, unit: "g", altValue: 0.25, altUnit: "tsp" },
-      { key: "achiote", ingredient: "Achiote Paste", baseAmount: 15, unit: "g", altValue: 1, altUnit: "tbsp" },
-      { key: "chipotle", ingredient: "Chipotle in Adobo (optional)", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" },
-      { key: "alPastorOnion", ingredient: "Sliced Onion", baseAmount: 100, unit: "g", altValue: 0.5, altUnit: "large onion" },
-      { key: "pineappleChunks", ingredient: "Pineapple Chunks", baseAmount: 150, unit: "g", altValue: 0.75, altUnit: "cup" }
-    ];
-    
-    // ----- Chili -----
-    const baseChiliLbs = 1; // Base: 1 lb (454 g) of beef
-    const chiliIngredients = [
-      { key: "chiliBeef", ingredient: "Beef", baseAmount: 454, unit: "g", altValue: null, altUnit: "" },
-      { key: "chiliPowder", ingredient: "Chili Powder", baseAmount: 20, unit: "g", altValue: 2, altUnit: "tbsp" },
-      { key: "crushedTomatoes", ingredient: "Crushed Tomatoes", baseAmount: 400, unit: "g", altValue: "1", altUnit: "can" },
-      { key: "greenChilis", ingredient: "Green Chilis", baseAmount: 227, unit: "g", altValue: "1", altUnit: "can" },
-      { key: "cayenne", ingredient: "Cayenne Pepper", baseAmount: 5, unit: "g", altValue: 1, altUnit: "tsp" }
-    ];
+
     
     function updateChickenRecipe() {
       const chickenInput = document.getElementById("chickenInput");
@@ -420,7 +345,7 @@
                      scaledBeef.bay.alt + ". Secure the lid and cook on high pressure for " + cookMinutes +
                      " minutes. Allow a natural release for 15 minutes, then quick-release any remaining pressure. " +
                      "If the beef isn't tender, reseal the pot and pressure cook in additional 15-minute increments until tender.</li>";
-      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and add a layer of cheese followed by a layer of the shredded beef. Top with chopped onions and cilantro. After about 2 minutes (adjust if needed), fold the tortilla in half and press it down. Continue cooking for another 1–2 minutes until golden and crisp, then remove and serve.</li>";
+      beefHtml += "<li><strong>Shred &amp; Assemble:</strong> Strain the beef and reserve the sauce. Shred the beef. Then, heat a pan over medium heat until it passes the <a href=\"https://youtube.com/shorts/TcM1hlAAJ_g?si=eh-l27dP_NLs6PnY\" target=\"_blank\">water drop test</a>. Add a thin layer of high-heat oil (such as ghee or avocado oil). Dip a tortilla briefly into the reserved broth, lay it flat on the pan, and add a layer of cheese followed by a layer of the shredded beef. Top with chopped onions and cilantro. Cook until the tortilla develops a light crust and becomes pliable enough to fold. Fold it in half, press gently, and continue cooking until crisp and browned, then serve.</li>";
       beefHtml += "</ol>";
       
       document.getElementById("beefRecipe").innerHTML = beefHtml;
@@ -443,151 +368,40 @@
       document.getElementById("beefShoppingList").innerHTML = shoppingHtml;
     }
     
-    function updateAlPastorRecipe() {
-      const alPastorInput = document.getElementById("alPastorInput");
-      let alPastorWeight = parseFloat(alPastorInput.value);
-      if (isNaN(alPastorWeight) || alPastorWeight <= 0) { alPastorWeight = baseAlPastorLbs; }
-      const scaleFactor = alPastorWeight / baseAlPastorLbs;
-      document.getElementById("alPastorScaleFactor").textContent = scaleFactor.toFixed(2);
-      
-      let scaledAP = {};
-      alPastorIngredients.forEach(item => {
-        scaledAP[item.key] = getScaledAmount(item, scaleFactor);
-      });
-      
-      let alPastorHtml = "<ol>";
-      alPastorHtml += "<li><strong>Marinate:</strong> In a bowl, combine " +
-                       scaledAP.pineappleJuice.alt + " (" + scaledAP.pineappleJuice.weight + ") pineapple juice, " +
-                       scaledAP.vinegar.alt + " (" + scaledAP.vinegar.weight + ") vinegar, " +
-                       scaledAP.garlic.alt + " (" + scaledAP.garlic.weight + ") minced garlic, " +
-                       scaledAP.ginger.alt + " (" + scaledAP.ginger.weight + ") grated ginger, " +
-                       scaledAP.chiliPowder.alt + " (" + scaledAP.chiliPowder.weight + ") chili powder, " +
-                       scaledAP.cumin.alt + " (" + scaledAP.cumin.weight + ") ground cumin, " +
-                       scaledAP.oregano.alt + " (" + scaledAP.oregano.weight + ") oregano, " +
-                       scaledAP.salt.alt + " (" + scaledAP.salt.weight + ") salt, and " +
-                       scaledAP.pepper.alt + " (" + scaledAP.pepper.weight + ") black pepper. Stir in " +
-                       scaledAP.achiote.alt + " (" + scaledAP.achiote.weight + ") achiote paste and, if using, " +
-                       scaledAP.chipotle.alt + " (" + scaledAP.chipotle.weight + ") chipotle. Add " +
-                       scaledAP.alPastorOnion.alt + " (" + scaledAP.alPastorOnion.weight + ") sliced onion and " +
-                       scaledAP.pineappleChunks.alt + " (" + scaledAP.pineappleChunks.weight + ") pineapple chunks. Marinate the chicken (about " + getScaledAmount(alPastorIngredients[0], scaleFactor).weight + ") for at least 1 hour.</li>";
-      alPastorHtml += "<li><strong>Sauté &amp; Pressure Cook:</strong> Set the Instant Pot to Sauté. Briefly sauté the marinated chicken with a little oil, then secure the lid and pressure cook on high for 8 minutes. Allow a natural release for 10 minutes.</li>";
-      alPastorHtml += "<li><strong>Serve:</strong> Shred the chicken and serve on warm tortillas with your favorite toppings.</li>";
-      alPastorHtml += "</ol>";
-      
-      document.getElementById("alPastorRecipe").innerHTML = alPastorHtml;
-      
-      let shoppingHtml = "<ul>";
-      alPastorIngredients.forEach(item => {
-        let scaledItem = getScaledAmount(item, scaleFactor);
-        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
-      });
-      shoppingHtml += "</ul>";
-      
-      document.getElementById("alPastorShoppingList").innerHTML = shoppingHtml;
-    }
-    
-    function updateChiliRecipe() {
-      const chiliInput = document.getElementById("chiliInput");
-      let chiliWeight = parseFloat(chiliInput.value);
-      if (isNaN(chiliWeight) || chiliWeight <= 0) { chiliWeight = baseChiliLbs; }
-      const scaleFactor = chiliWeight / baseChiliLbs;
-      document.getElementById("chiliScaleFactor").textContent = scaleFactor.toFixed(2);
-      
-      let selectedType = document.getElementById("chiliType").value; // "ground" or "chuck"
-      
-      let scaledChili = {};
-      chiliIngredients.forEach(item => {
-        if (item.key === "chiliBeef") {
-          const scaledWeight = Math.ceil(item.baseAmount * scaleFactor);
-          // Show alternative as lbs.
-          const altLbs = (scaledWeight / 453.6).toFixed(1);
-          scaledChili[item.key] = { weight: scaledWeight + " " + item.unit, alt: altLbs + " lbs" };
-        } else {
-          scaledChili[item.key] = getScaledAmount(item, scaleFactor);
-        }
-      });
-      
-      let chiliHtml = "<ol>";
-      chiliHtml += "<li><strong>Sauté the Beef:</strong> Set the Instant Pot to Sauté. Brown the " + scaledChili.chiliBeef.alt + " (" + scaledChili.chiliBeef.weight + ") " + (selectedType === "ground" ? "ground beef" : "chuck roast, cut into chunks") + " until well browned.</li>";
-      chiliHtml += "<li><strong>Add Spices &amp; Tomatoes:</strong> Stir in " +
-                   scaledChili.chiliPowder.alt + " (" + scaledChili.chiliPowder.weight + ") chili powder, " +
-                   scaledChili.crushedTomatoes.alt + " (" + scaledChili.crushedTomatoes.weight + ") crushed tomatoes, " +
-                   scaledChili.greenChilis.alt + " (" + scaledChili.greenChilis.weight + ") green chilis, and " +
-                   scaledChili.cayenne.alt + " (" + scaledChili.cayenne.weight + ") cayenne pepper. (Note: You can use less crushed tomatoes if you prefer a shorter sauté time.)</li>";
-      if(selectedType === "ground") {
-        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 10 minutes. Then quick-release the pressure.</li>";
-      } else {
-        chiliHtml += "<li><strong>Pressure Cook:</strong> Secure the lid and pressure cook on high for 20 minutes. Allow a natural release for 10 minutes, then quick-release any remaining pressure.</li>";
-      }
-      chiliHtml += "<li><strong>Simmer:</strong> Switch to Sauté mode and let the chili simmer for 5–10 minutes, stirring occasionally, to blend the flavors.</li>";
-      chiliHtml += "</ol>";
-      
-      document.getElementById("chiliRecipe").innerHTML = chiliHtml;
-      
-      let shoppingHtml = "<ul>";
-      chiliIngredients.forEach(item => {
-        let scaledItem = (item.key === "chiliBeef") ? 
-          { weight: Math.ceil(item.baseAmount * scaleFactor) + " " + item.unit, alt: ((Math.ceil(item.baseAmount * scaleFactor))/453.6).toFixed(1) + " lbs" } :
-          getScaledAmount(item, scaleFactor);
-        shoppingHtml += "<li>" + getShoppingListEntry(item, scaledItem) + "</li>";
-      });
-      shoppingHtml += "</ul>";
-      
-      document.getElementById("chiliShoppingList").innerHTML = shoppingHtml;
-    }
+
     
     // ----- Tab Navigation -----
     function showTab(tabId) {
       document.getElementById("chickenTab").style.display = "none";
       document.getElementById("beefTab").style.display = "none";
-      document.getElementById("alPastorTab").style.display = "none";
-      document.getElementById("chiliTab").style.display = "none";
       document.getElementById("btnChicken").classList.remove("active");
       document.getElementById("btnBeef").classList.remove("active");
-      document.getElementById("btnAlPastor").classList.remove("active");
-      document.getElementById("btnChili").classList.remove("active");
       
       document.getElementById(tabId).style.display = "block";
       if(tabId === "chickenTab") {
         document.getElementById("btnChicken").classList.add("active");
       } else if(tabId === "beefTab") {
         document.getElementById("btnBeef").classList.add("active");
-      } else if(tabId === "alPastorTab") {
-        document.getElementById("btnAlPastor").classList.add("active");
-      } else if(tabId === "chiliTab") {
-        document.getElementById("btnChili").classList.add("active");
       }
     }
     
     // ----- Event Listeners & Initialization -----
     document.getElementById("chickenInput").addEventListener("input", updateChickenRecipe);
     document.getElementById("beefInput")?.addEventListener("input", updateBeefRecipe);
-    document.getElementById("alPastorInput").addEventListener("input", updateAlPastorRecipe);
-    document.getElementById("chiliInput").addEventListener("input", updateChiliRecipe);
-    document.getElementById("chiliType").addEventListener("change", updateChiliRecipe);
+
     
     window.onload = function() {
       updateChickenRecipe();
       if(document.getElementById("beefInput")) { updateBeefRecipe(); }
-      updateAlPastorRecipe();
-      updateChiliRecipe();
+
     }
   </script>
   
-  <!-- Hidden inputs for Beef, Al Pastor, and Chili -->
+  <!-- Hidden input for Beef -->
   <div style="display:none;">
     <input type="number" id="beefInput" value="3" step="0.001" min="0">
     <span class="scale-display">Scale Factor: <span id="beefScaleFactor">1.00</span></span>
-    <input type="number" id="alPastorInput" value="2" step="0.001" min="0">
-    <span class="scale-display">Scale Factor: <span id="alPastorScaleFactor">1.00</span></span>
-    <input type="number" id="chiliInput" value="1" step="0.001" min="0">
-    <span class="scale-display">Scale Factor: <span id="chiliScaleFactor">1.00</span></span>
   </div>
-  
-  <!-- Hidden container for chili shopping list -->
-  <div id="chiliShoppingList" class="section" style="display:none;"></div>
-  
-  <!-- Hidden dropdown for chili type is already visible in the Chili tab -->
-  
+
 </body>
 </html>
