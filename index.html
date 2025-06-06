@@ -195,13 +195,23 @@
     
     // Returns a shopping list entry using a discrete measure if applicable.
     function getShoppingListEntry(item, scaledItem) {
-      const discreteUnits = ["large onion", "tortilla", "lime", "bay leaves", "small bunch", "a pinch", "a handful of mint", "chiles", "chile", "can"];
-      if (item.altUnit && discreteUnits.includes(item.altUnit)) {
-        // Ensure a minimum of 1 is shown.
+      const discreteUnits = [
+        "large onion", "tortilla", "lime", "bay leaves",
+        "small bunch", "a pinch", "a handful of mint",
+        "chiles", "chile", "can"
+      ];
+
+      let altPhrase = item.altUnit;
+      if (item.altValue !== null && isNaN(parseFloat(item.altValue))) {
+        altPhrase = item.altValue + (item.altUnit ? " " + item.altUnit : "");
+      }
+
+      if (altPhrase && discreteUnits.includes(altPhrase)) {
+        // Ensure a minimum of 1 is shown for numeric amounts
         let parts = scaledItem.alt.split(" ");
         let num = parseFloat(parts[0]);
         if (!isNaN(num) && num < 1) {
-          return item.ingredient + ": 1 " + item.altUnit;
+          return item.ingredient + ": 1 " + altPhrase;
         }
         return item.ingredient + ": " + scaledItem.alt;
       } else {
