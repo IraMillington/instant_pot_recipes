@@ -2,8 +2,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interactive Recipes: Tikka Masala & Quesabirria</title>
   <style>
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 0 15px;
+    }
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -66,9 +72,26 @@
     li {
       margin-bottom: 10px;
     }
+
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      .tab-buttons button {
+        display: block;
+        width: 100%;
+        margin: 0 0 5px 0;
+      }
+      input[type="number"],
+      select {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="container">
   <h1>Interactive Recipes</h1>
   <div class="tab-buttons">
     <button id="btnChicken" class="active" onclick="showTab('chickenTab')">Chicken Tikka Masala & Raita</button>
@@ -402,6 +425,8 @@
     <input type="number" id="beefInput" value="3" step="0.001" min="0">
     <span class="scale-display">Scale Factor: <span id="beefScaleFactor">1.00</span></span>
   </div>
+
+  </div> <!-- end container -->
 
 </body>
 </html>
